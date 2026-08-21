@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# data & experiment outputs never belong in the code repo
+*.csv
+*.jsonl
+*.parquet
+*.jpg
+*.png
+*.pdf
+*.log
+_assemble_code.py

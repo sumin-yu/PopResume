@@ -1,0 +1,85 @@
+{
+  "elementary_middle_school_teachers": {
+    "occupation_code": "25-2021.00",
+    "job_zone": 4,
+    "skills": [
+      "Instructing",
+      "Learning Strategies",
+      "Speaking",
+      "Active Listening",
+      "Critical Thinking",
+      "Monitoring",
+      "Social Perceptiveness",
+      "Coordination",
+      "Reading Comprehension",
+      "Service Orientation"
+    ]
+  },
+
+  "construction_laborers": {
+    "occupation_code": "47-2061.00",
+    "job_zone": 2,
+    "skills": [
+      "Speaking",
+      "Active Listening",
+      "Coordination",
+      "Operation and Control",
+      "Operations Monitoring",
+      "Complex Problem Solving",
+      "Critical Thinking",
+      "Reading Comprehension",
+      "Equipment Selection",
+      "Monitoring"
+    ]
+  },
+
+  "software_developers": {
+    "occupation_code": "15-1252.00",
+    "job_zone": 4,
+    "skills": [
+      "Programming",
+      "Critical Thinking",
+      "Judgment and Decision Making",
+      "Active Learning",
+      "Reading Comprehension",
+      "Systems Analysis",
+      "Active Listening",
+      "Complex Problem Solving",
+      "Systems Evaluation",
+      "Technology Design"
+    ]
+  },
+
+  "registered_nurses": {
+    "occupation_code": "29-1141.00",
+    "job_zone": 4,
+    "skills": [
+      "Social Perceptiveness",
+      "Active Listening",
+      "Coordination",
+      "Critical Thinking",
+      "Service Orientation",
+      "Speaking",
+      "Judgment and Decision Making",
+      "Reading Comprehension",
+      "Monitoring",
+      "Writing"
+    ]
+  },
+  "accountants_auditors": {
+    "occupation_code": "13-2011.00",
+    "job_zone": 4,
+    "skills": [
+      "Reading Comprehension",
+      "Active Listening",
+      "Critical Thinking",
+      "Speaking",
+      "Judgment and Decision Making",
+      "Writing",
+      "Complex Problem Solving",
+      "Monitoring",
+      "Coordination",
+      "Mathematics"
+    ]
+  }
+}
