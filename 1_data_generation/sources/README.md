@@ -47,7 +47,7 @@ occupation — see §4 of the paper.
 PSID requires registration and forbids redistribution: <https://psidonline.isr.umich.edu/>.
 Build a family–individual file covering employment history, then filter to the analysis population
 (ages 18–44, valid work-history records) and save it as `sources/PSID/psid_famind_final_filtered_0121.csv`.
-`01-2_..._final.ipynb` uses it to fit the experience-year model that is then transferred to the ACS
+`01-2_work_experience.ipynb` uses it to fit the experience-year model that is then transferred to the ACS
 sample by density-ratio reweighting.
 
 ## Pipeline order

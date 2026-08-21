@@ -1,9 +1,11 @@
-# PopResume — Code
+# PopResume
 
-Code to reproduce **PopResume: Causal Fairness Evaluation of LLM/VLM Resume Screeners with a
-Population-Representative Dataset**. The pipeline (1) generates a population-representative resume
-dataset from U.S. population statistics, (2) scores resumes with LLM/VLM screeners, and (3) estimates
-path-specific causal effects (TE / NDE / NIE / BIE / RIE).
+**Causal Fairness Evaluation of LLM/VLM Resume Screeners with a Population-Representative Dataset**
+(EMNLP 2026)
+
+Reproduction code. The pipeline (1) generates a population-representative resume dataset from U.S.
+population statistics, (2) scores resumes with LLM/VLM screeners, and (3) estimates path-specific
+causal effects (TE / NDE / NIE / BIE / RIE).
 
 - 🌐 Project page: https://sumin-yu.github.io/PopResume
 - 📄 Paper: [arXiv:2603.22714](https://arxiv.org/abs/2603.22714) · EMNLP 2026
@@ -12,10 +14,10 @@ path-specific causal effects (TE / NDE / NIE / BIE / RIE).
 ## Pipeline
 
 ```
-1_data_generation/     ❶❷❸  population statistics -> structured profiles -> resumes
+1_data_generation/     (1)(2)(3)  population statistics -> structured profiles -> resumes
   sources/                                             pipeline inputs — see sources/README.md
-  01-1_structured_profile_dataset_generation.ipynb    ACS PUMS sampling (X, Z, B, R)
-  01-2_IPUMS_PSID_exp_year_imput_..._final.ipynb       PSID work-experience imputation
+  01-1_structured_profile_dataset_generation.ipynb     ACS PUMS sampling (X, Z, B, R)
+  01-2_work_experience.ipynb                           PSID work-experience imputation
   01-3_name_sampler.ipynb                              SSA / Census name sampling + grouping labels
   01-4_var_grouping.ipynb                              collapse edu_level / state, attach name proxies
   02-2_resume_content_generation_deterministic.py      rule-based resume content
@@ -24,14 +26,14 @@ path-specific causal effects (TE / NDE / NIE / BIE / RIE).
   resume_pdf_generation.py                             text -> PDF
   profile_image.ipynb                                  inspect the generated profile photos
 
-2_scoring/             ❹  LLM/VLM resume scoring
+2_scoring/             (4)        LLM/VLM resume scoring
   run_scoring.sh                                       batch runner (LLM + VLM, all providers)
   score_resumes_llm_score.py                           text-resume scoring (LLM)
   score_resumes_vlm_score.py                           image-resume scoring (VLM)
   pdf_to_jpg.py / pdf_to_jpg.sh                        PDF -> JPG for VLM input
   job_info_v2/                                         job descriptions per occupation
 
-3_causal_estimation/   ❺  path-specific effect estimation (DML-UCA)
+3_causal_estimation/   (5)        path-specific effect estimation (DML-UCA)
   causal_effect.py                                     TE / NDE / NIE / BIE / RIE
 ```
 
@@ -102,11 +104,11 @@ RIE = (df["Estimated_WDE_sn1"] + df["Estimated_WDE_sn2"]) / 2
 
 ```bibtex
 @inproceedings{yu2026popresume,
-  title     = {PopResume: Causal Fairness Evaluation of LLM/VLM Resume Screeners
+  title                                                = {PopResume: Causal Fairness Evaluation of LLM/VLM Resume Screeners
                with Population-Representative Dataset},
-  author    = {Yu, Sumin and Park, Juhyeon and Moon, Taesup},
+  author                                               = {Yu, Sumin and Park, Juhyeon and Moon, Taesup},
   booktitle = {Proceedings of the 2026 Conference on Empirical Methods in
                Natural Language Processing (EMNLP)},
-  year      = {2026}
+  year                                                 = {2026}
 }
 ```
