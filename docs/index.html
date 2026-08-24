@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PopResume: Causal Fairness Evaluation of LLM/VLM Resume Screeners</title>
+  <meta name="description" content="A population-representative resume dataset for path-specific effect–based fairness auditing of LLM/VLM resume screeners.">
+  <link rel="stylesheet" href="static/css/style.css?v=22">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="venue">EMNLP 2026</p>
+    <h1><span class="brand"><span class="pop">Pop</span>Resume</span><br>
+      <span class="title-sub">Causal Fairness Evaluation of LLM/VLM Resume Screeners</span><br>
+      <span class="title-sub">with a Population-Representative Dataset</span></h1>
+
+    <p class="authors">
+      <a href="https://sumin-yu.github.io/" target="_blank" rel="noopener">Sumin Yu</a><span class="sup">∗1</span>,
+      <a href="https://beotborry.github.io/" target="_blank" rel="noopener">Juhyeon Park</a><span class="sup">∗1</span>,
+      <a href="https://mindlab-snu.notion.site/taesup-moon" target="_blank" rel="noopener">Taesup Moon</a><span class="sup">1</span>
+    </p>
+    <p class="affil"><span class="sup">1</span>Seoul National University</p>
+    <p class="note-eq">∗ : Equal contribution</p>
+
+    <nav class="links">
+      <a class="btn" href="https://arxiv.org/pdf/2603.22714" target="_blank" rel="noopener" data-slot="paper">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        Paper</a>
+      <a class="btn" href="https://arxiv.org/abs/2603.22714" target="_blank" rel="noopener" data-slot="arxiv">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        arXiv</a>
+      <a class="btn" href="https://github.com/sumin-yu/PopResume" target="_blank" rel="noopener" data-slot="code">
+        <svg class="ic" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        Code</a>
+      <a class="btn" href="https://huggingface.co/datasets/sumin-yu/PopResume" target="_blank" rel="noopener" data-slot="data">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        Dataset</a>
+      <a class="btn" href="#bibtex">
+        <svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v6H8c0 1.7.2 2.5 1.8 2.7l-.3 1.8C6.3 17.7 5 16.3 5 13V7zm9 0h4v6h-3c0 1.7.2 2.5 1.8 2.7l-.3 1.8c-3.2-.5-4.5-1.9-4.5-5.2V7z"/></svg>
+        BibTeX</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <figure class="teaser">
+    <img src="static/images/teaser.png" alt="Current name-injection evaluation vs. path-specific effect-based evaluation">
+    <figcaption><b>Figure 1.</b> Prior work injects protected attributes (only the name is changed), which
+    focuses on outcome disparity and disrupts real-world relationships among variables — making
+    causal-framework–based evaluation infeasible. PopResume is grounded in population statistics and
+    enables path-specific effect (PSE)-based evaluation, decomposing NIE into a permissible
+    <b class="k-blue">business-necessity (BIE)</b> path and an impermissible <b class="k-red">redlining (RIE)</b> path.</figcaption>
+  </figure>
+
+  <section>
+    <h2>Abstract</h2>
+    <p class="lead">
+      We present <b>PopResume</b>, a population-representative resume dataset for causal fairness auditing
+      of LLM- and VLM-based resume screening systems. Unlike existing benchmarks that rely on manually
+      injected demographic information and outcome-level disparities, PopResume is grounded in population
+      statistics and preserves natural attribute relationships, enabling <b>path-specific effect (PSE)-based</b>
+      fairness evaluation. We decompose the effect of a protected attribute on resume scores into two paths:
+      the <b>business necessity</b> path, mediated by job-relevant qualifications, and the <b>redlining</b>
+      path, mediated by demographic proxies. This distinction allows auditors to separate legally permissible
+      from impermissible sources of disparity. Evaluating four LLMs and four VLMs on PopResume's <b>60.8K
+      resumes across five occupations</b>, we identify five representative discrimination patterns that
+      aggregate metrics fail to capture. Our results demonstrate that PSE-based evaluation reveals fairness
+      issues masked by outcome-level measures, underscoring the need for causally-grounded auditing frameworks
+      in AI-assisted hiring.
+    </p>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><span class="num">60,884</span><span class="lab">resumes</span></div>
+    <div class="stat"><span class="num">5</span><span class="lab">occupations</span></div>
+    <div class="stat"><span class="num">3</span><span class="lab">resume formats</span></div>
+    <div class="stat"><span class="num">8</span><span class="lab">4 LLMs / 4 VLMs</span></div>
+    <div class="stat"><span class="num">120</span><span class="lab">evaluation cases</span></div>
+  </section>
+
+  <section>
+    <h2>Dataset construction & evaluation pipeline</h2>
+    <figure>
+      <img src="static/images/pipeline.png" alt="PopResume construction and evaluation pipeline">
+      <figcaption><b>Figure 2.</b>
+      ❶ Estimate the joint distribution of attributes from population statistics (ACS PUMS, PSID, SSA, Census).
+      ❷ Sample population-representative structured profiles — protected attribute (X), confounders (Z),
+      business-necessity mediators (B: education, experience), and redlining mediators (R: name, state).
+      ❸ Realize each profile as a resume in three formats — text, image without photo, and image with a
+      Face-MoGLE–synthesized profile photo.
+      ❹ Score with an LLM/VLM screener (suitability 0–100).
+      ❺ Estimate TE, NDE, NIE and decompose NIE into <b class="k-blue">BIE</b> and <b class="k-red">RIE</b>.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>When do different pathways matter?</h2>
+    <p class="lead">Path-specific decomposition surfaces fairness issues that total-effect metrics mask.
+    We evaluate 120 cases (5 occupations × 3 formats × 2 attributes × 4 models) and identify five
+    representative discrimination patterns. Reported effects use gender with
+    <em>x₀ = Female, x₁ = Male</em> (positive → favors male through that pathway).</p>
+
+    <div class="legend">
+      <span><b>TE</b> total</span>
+      <span class="k-orange"><b>NDE</b> direct</span>
+      <span class="k-green"><b>NIE</b> indirect</span>
+      <span class="k-blue"><b>BIE</b> business necessity</span>
+      <span class="k-red"><b>RIE</b> redlining</span>
+    </div>
+
+    <div class="case">
+      <img src="static/images/case_1.png" alt="Case 1 effect bars">
+      <div class="body">
+        <h3>Case 1 — Direct discrimination without explicit demographics <span class="tag imperm">impermissible</span></h3>
+        <p><b class="k-orange">NDE ≠ 0</b> even though no demographic information appears in the resume: the
+        model infers protected attributes from names or education and reflects them directly in scores.
+        Removing explicit demographics is therefore insufficient.</p>
+        <span class="freq">49 / 80 no-demographic cases</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <img src="static/images/case_2.png" alt="Case 2 effect bars">
+      <div class="body">
+        <h3>Case 2 — Discrimination masked by cancellation <span class="tag neutral">hidden</span></h3>
+        <p>TE ≈ 0 despite <b class="k-orange">NDE ≠ 0</b> and <b class="k-green">NIE ≠ 0</b> in opposite
+        directions (NDE·NIE &lt; 0). Outcome-based metrics such as disparate impact would wrongly conclude the
+        system is fair, while substantial causal effects remain.</p>
+        <span class="freq">6 / 120 cases</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <img src="static/images/case_3.png" alt="Case 3 effect bars">
+      <div class="body">
+        <h3>Case 3 — Disparities driven by legitimate qualifications <span class="tag perm">permissible</span></h3>
+        <p><b class="k-blue">BIE ≠ 0</b> with <b class="k-orange">NDE ≈ 0</b> and <b class="k-red">RIE ≈ 0</b>:
+        disparity flows through job-relevant qualifications (education, experience) — potentially defensible
+        under the business-necessity doctrine.</p>
+        <span class="freq">6 / 120 cases</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <img src="static/images/case_4.png" alt="Case 4 effect bars">
+      <div class="body">
+        <h3>Case 4 — Discrimination through demographic proxies <span class="tag imperm">impermissible</span></h3>
+        <p><b class="k-red">RIE ≠ 0</b> with <b class="k-orange">NDE ≈ 0</b> and <b class="k-blue">BIE ≈ 0</b>:
+        the model uses name/address proxies for protected attributes — impermissible under Title VII
+        (redlining), regardless of the total effect's magnitude.</p>
+        <span class="freq">6 / 120 cases</span>
+      </div>
+    </div>
+
+    <div class="case two">
+      <img src="static/images/case_5.png" alt="Case 5 cancellation effect bars">
+      <img src="static/images/case_6.png" alt="Case 5 amplification effect bars">
+      <div class="body">
+        <h3>Case 5 — Disparities driven by mixed mediation pathways <span class="tag neutral">mixed</span></h3>
+        <p>Both <b class="k-blue">BIE ≠ 0</b> and <b class="k-red">RIE ≠ 0</b> contribute to
+        <b class="k-green">NIE</b>. The two paths can <em>cancel</em> (left) or <em>amplify</em> (right) each
+        other — so at the NIE level alone, legitimate qualification factors and discriminatory proxies become
+        indistinguishable. Separating B and R is essential.</p>
+        <span class="freq">53 / 120 cases</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Profile photos increase direct discrimination</h2>
+    <p class="lead">For VLM-based scoring, we compare resume images with and without a synthesized profile
+    photo. When photos are included, the magnitude of <b class="k-orange">NDE</b> increases noticeably
+    (8 of 20 case pairs) — visual demographic cues make protected attributes more directly accessible to the
+    model. Organizations deploying VLM screeners should assess whether profile photos are necessary at all.</p>
+  </section>
+
+  <section>
+    <h2>Dataset release</h2>
+    <table>
+      <thead><tr><th>Config</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td><code>text</code></td><td>Text resumes with derived attributes: sex, race, age, state, edu_level, exp_year, first/last name.</td></tr>
+        <tr><td><code>images</code></td><td>Resume images with and without a synthesized profile photo (HF imagefolder).</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Synthetic only — generated from aggregate population statistics; no real individual's
+    data.<br>Raw IPUMS/PSID microdata identifiers are not redistributed.</p>
+  </section>
+
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <pre><code>@inproceedings{yu2026popresume,
+  title     = {PopResume: Causal Fairness Evaluation of LLM/VLM Resume Screeners
+               with Population-Representative Dataset},
+  author    = {Yu, Sumin and Park, Juhyeon and Moon, Taesup},
+  booktitle = {Proceedings of the 2026 Conference on Empirical Methods in
+               Natural Language Processing (EMNLP)},
+  year      = {2026}
+}</code></pre>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Seoul National University · Page template adapted from
+    <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

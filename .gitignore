@@ -12,3 +12,6 @@ __pycache__/
 *.pdf
 *.log
 _assemble_code.py
+
+# the project page lives in docs/ and needs its own images
+!docs/static/images/*.png
